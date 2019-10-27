@@ -53,7 +53,8 @@ public class TweetController {
 		tweetEJB.addNew(tweet.getEntity());
 		tweetList = tweetEJB.findTweets();
 
-		myTweeter.start(tweet.getTweet());
+		//commented because it crashed
+		//myTweeter.start(tweet.getTweet());
 
 
 		return "tweetlist.xhtml";
