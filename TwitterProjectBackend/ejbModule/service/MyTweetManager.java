@@ -1,9 +1,6 @@
 package service;
 
-import twitter4j.*;
 import twitter4j.Status;
-
-
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -17,12 +14,16 @@ public class MyTweetManager {
 
 			Twitter twitter = TwitterFactory.getSingleton();
 			twitter.setOAuthConsumer("KUEaK4VIsyrRdEiOc7qBRWLRa", "A3ZbjJPc5xnXk2OGOYiF8XPaWFZ6AHPMFpLoOotK3a31aCXL0q");
-			AccessToken accessToken = new AccessToken("153104802-lme4y5Xqzsrk2WC4YdH50M5ld0f3khPVyvIgVInJ", "cBdyXJtp7ZNkbQj6hTiwlaAovfkg2M8NiBgR7RNNBeIyS")
+			AccessToken accessToken = new AccessToken("153104802-lme4y5Xqzsrk2WC4YdH50M5ld0f3khPVyvIgVInJ", "cBdyXJtp7ZNkbQj6hTiwlaAovfkg2M8NiBgR7RNNBeIyS");
 			twitter.setOAuthAccessToken(accessToken);
-			Status status = twitter.updateStatus(userTweet);
-			System.out.println("Successfully updated the status to [" + status.getText() + "].");
-
-
+			Status status;
+			try {
+				status = twitter.updateStatus(userTweet);
+				System.out.println("Successfully updated the status to [" + status.getText() + "].");
+			} catch (TwitterException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 
 	private String getSavedAccessTokenSecret() {
