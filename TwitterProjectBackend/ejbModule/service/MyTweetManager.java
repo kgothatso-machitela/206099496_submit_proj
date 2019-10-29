@@ -1,26 +1,28 @@
 package service;
 
+import twitter4j.*;
 import twitter4j.Status;
+
+
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
 
 public class MyTweetManager {
 
 	public void start(String userTweet) {
 
-		// The factory instance is re-useable and thread safe.
-		try {
-			Twitter twitter = new TwitterFactory().getInstance();
-			// Twitter twitter = TwitterFactory.getSingleton();
+			System.out.println("Create Tweet" + userTweet );
+
+			Twitter twitter = TwitterFactory.getSingleton();
+			twitter.setOAuthConsumer("KUEaK4VIsyrRdEiOc7qBRWLRa", "A3ZbjJPc5xnXk2OGOYiF8XPaWFZ6AHPMFpLoOotK3a31aCXL0q");
+			AccessToken accessToken = new AccessToken("153104802-lme4y5Xqzsrk2WC4YdH50M5ld0f3khPVyvIgVInJ", "cBdyXJtp7ZNkbQj6hTiwlaAovfkg2M8NiBgR7RNNBeIyS")
+			twitter.setOAuthAccessToken(accessToken);
 			Status status = twitter.updateStatus(userTweet);
 			System.out.println("Successfully updated the status to [" + status.getText() + "].");
 
-		} catch (TwitterException te) {
-			te.printStackTrace();
-			System.out.println("Failed to get timeline: " + te.getMessage());
-			System.exit(-1);
-		}
+
 	}
 
 	private String getSavedAccessTokenSecret() {

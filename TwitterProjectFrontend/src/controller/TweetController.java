@@ -51,11 +51,11 @@ public class TweetController {
 		tweet.setDateOfTweet(dateString);
 
 		tweetEJB.addNew(tweet.getEntity());
+
+
+		myTweeter.start("@AdhLecturer tweeted from my approved dev access account");
+
 		tweetList = tweetEJB.findTweets();
-
-		//commented because it crashed
-		myTweeter.start(tweet.getTweet());
-
 
 		return "tweetlist.xhtml";
 	}
