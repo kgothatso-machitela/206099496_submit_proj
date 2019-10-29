@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,10 +10,12 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.servlet.ServletException;
 
 import model.Tweet;
 import service.MyTweetManager;
 import service.TweetEJB;
+import twitter4j.TwitterException;
 
 @ManagedBean(name = "tweetcontroller")
 @SessionScoped
@@ -42,7 +45,7 @@ public class TweetController {
 	}
 
 	@SuppressWarnings("unchecked")
-	public String addNewTweet() {
+	public void addNewTweet() {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd 'T' HH:mm:ss");
 	    Date date = new Date();
 
@@ -52,12 +55,24 @@ public class TweetController {
 
 		tweetEJB.addNew(tweet.getEntity());
 
-
-		myTweeter.start("@AdhLecturer tweeted from my approved dev access account");
-
 		tweetList = tweetEJB.findTweets();
 
-		return "tweetlist.xhtml";
+		sendTweet();
+
+		//return "tweetlist.xhtml";
+	}
+
+	public void sendTweet(){
+		System.out.println("trying to send tweet");
+
+		try {
+
+			MyTweetManager.startTweet("@AdhLecturer tweeted from my approved dev access account");
+		} catch (ServletException | TwitterException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 
